@@ -5,4 +5,22 @@
     <string name="title_notifications">Notifications</string>
     <string name="main">Главное</string>
     <string name="archive">Архив</string>
+    <string name="add">Добавить</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="name_product">Наименование товара</string>
+    <string name="product_price">Цена товара</string>
+    <string name="write_name">Впишите название товара</string>
+    <string name="write_product_price">Впишите цену товара</string>
+    <string name="product_fabric">Производитель товара</string>
+    <string name="write_product_fabric">Название производителя товара</string>
+    <string name="product_amount">Количество товара</string>
+    <string name="cancel">Отмена</string>
+    <string name="detail_about_product">Детали о товаре</string>
+    <string name="add_product">Добавить товар</string>
+    <string name="save">Сохранить</string>
+    <string name="fill_all_fields">Заполните все поля, пожалуйста!</string>
+    <string name="archive_bottom_sheet">Архивировать</string>
+    <string name="delete_bottom_sheet">Удалить</string>
+    <string name="restore_bottom_sheet">Восстановить</string>
 </resources>

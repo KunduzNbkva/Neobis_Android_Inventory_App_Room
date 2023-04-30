@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/bottom_sheet"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <View
+        android:id="@+id/bottom_sheet_view"
+        android:layout_width="80dp"
+        android:layout_height="3dp"
+        android:background="@drawable/stick_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/bottom_sheet_archive"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:fontFamily="@font/opensans_bold"
+        android:padding="20sp"
+        android:text="@string/archive_bottom_sheet"
+        android:textColor="@color/main_blue"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_view" />
+
+    <TextView
+        android:id="@+id/bottom_sheet_restore"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:fontFamily="@font/opensans_bold"
+        android:padding="20sp"
+        android:text="@string/restore_bottom_sheet"
+        android:textColor="@color/main_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/bottom_sheet_delete"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:fontFamily="@font/opensans_bold"
+        android:padding="20sp"
+        android:text="@string/delete_bottom_sheet"
+        android:textColor="@color/main_blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_archive"
+        android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

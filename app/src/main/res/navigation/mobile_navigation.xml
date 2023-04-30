@@ -7,19 +7,33 @@
 
     <fragment
         android:id="@+id/navigation_main"
-        android:name="kg.kunduznbkva.inventoryapplication.ui.home.MainFragment"
+        android:name="kg.kunduznbkva.inventoryapplication.MainFragment"
         android:label="@string/main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_navigation_main_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+        <action
+            android:id="@+id/action_navigation_main_to_navigation_archive"
+            app:destination="@id/navigation_archive" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_archive"
-        android:name="kg.kunduznbkva.inventoryapplication.ui.dashboard.ArchiveFragment"
+        android:name="kg.kunduznbkva.inventoryapplication.ArchiveFragment"
         android:label="@string/archive"
         tools:layout="@layout/fragment_archive" />
 
     <fragment
         android:id="@+id/navigation_detail"
-        android:name="kg.kunduznbkva.inventoryapplication.ui.notifications.NotificationsFragment"
+        android:name="kg.kunduznbkva.inventoryapplication.AddFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_add" >
+        <action
+            android:id="@+id/action_navigation_detail_to_navigation_archive"
+            app:destination="@id/navigation_archive" />
+        <action
+            android:id="@+id/action_navigation_detail_to_navigation_main"
+            app:destination="@id/navigation_main" />
+    </fragment>
 </navigation>

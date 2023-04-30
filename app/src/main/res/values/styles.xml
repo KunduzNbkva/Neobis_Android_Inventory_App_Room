@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ItemSecondaryTextStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <style name="view_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/view_grey</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="recycler_item_card">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:elevation">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">6dp</item>
+        <item name="android:layout_marginStart">5dp</item>
+        <item name="android:layout_marginEnd">5dp</item>
+        <item name="android:padding">7dp</item>
+    </style>
+
+    <style name="product_fields">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:fontFamily">@font/robotoflex_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="fields_input_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">start</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:padding">14dp</item>
+        <item name="android:background">@drawable/fields_back</item>
+        <item name="android:fontFamily">@font/robotoflex_regular</item>
+        <item name="android:textColorHint">@color/hint_color</item>
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="add_btn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:layout_marginEnd">24dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:backgroundTint">@color/blue_btn</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="cancel_btn_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_marginTop">40dp</item>
+        <item name="android:fontFamily">@font/opensans_bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginStart">24dp</item>
+        <item name="android:backgroundTint">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/blue_btn</item>
+    </style>
+
+</resources>
