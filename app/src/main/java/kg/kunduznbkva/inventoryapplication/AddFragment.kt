@@ -65,7 +65,7 @@ class AddFragment : Fragment() {
             val productAmount = binding.productAmountEdit.text.toString()
             //val productImage = binding.
 
-            val productNew = Product(0,
+            val productNew = Product(product?.id,
                 productName, productPrice.toDouble(),
                 productFabric, productAmount.toInt(), null)
 
@@ -78,6 +78,7 @@ class AddFragment : Fragment() {
             } else {
                 if (dataCheck(productNew)) {
                     App.db.productDao().insert(productNew)
+
                     findNavController().navigate(R.id.action_navigation_detail_to_navigation_main)
                 }
             }

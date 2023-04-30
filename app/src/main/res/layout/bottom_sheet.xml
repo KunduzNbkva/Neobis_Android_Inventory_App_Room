@@ -3,7 +3,6 @@
     android:id="@+id/bottom_sheet"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -19,8 +18,8 @@
 
     <TextView
         android:id="@+id/bottom_sheet_archive"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
         android:fontFamily="@font/opensans_bold"
         android:padding="20sp"
         android:text="@string/archive_bottom_sheet"
@@ -32,27 +31,27 @@
 
     <TextView
         android:id="@+id/bottom_sheet_restore"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:fontFamily="@font/opensans_bold"
-        android:padding="20sp"
+        android:padding="10dp"
         android:text="@string/restore_bottom_sheet"
         android:textColor="@color/main_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bottom_sheet_view"
         android:visibility="gone"/>
 
     <TextView
         android:id="@+id/bottom_sheet_delete"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:fontFamily="@font/opensans_bold"
-        android:padding="20sp"
+        android:padding="10dp"
         android:text="@string/delete_bottom_sheet"
         android:textColor="@color/main_blue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_archive"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_restore"
         android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

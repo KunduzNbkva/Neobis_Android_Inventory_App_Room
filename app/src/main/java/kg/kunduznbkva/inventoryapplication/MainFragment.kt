@@ -65,7 +65,7 @@ class MainFragment : Fragment(), OnLongItemClick, OnItemClickListener {
     }
 
     private fun createBottomSheet(product: Product){
-        val dialog = BottomSheetDialog(product)
+        val dialog = BottomSheetDialog(product,false)
         dialog.show(parentFragmentManager,"ModalBottomSheet")
     }
 

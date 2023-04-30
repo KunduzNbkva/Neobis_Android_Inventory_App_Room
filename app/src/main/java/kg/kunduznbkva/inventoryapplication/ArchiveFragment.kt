@@ -49,7 +49,7 @@ class ArchiveFragment : Fragment(), OnLongItemClick, OnItemClickListener {
     }
 
     private fun createBottomSheet(product: Product){
-        val dialog = BottomSheetDialog(product)
+        val dialog = BottomSheetDialog(product,true)
         dialog.show(parentFragmentManager,"ModalBottomSheet")
     }
 

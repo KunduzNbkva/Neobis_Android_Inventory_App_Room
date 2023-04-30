@@ -6,7 +6,7 @@ import kg.kunduznbkva.inventoryapplication.model.Product
 @Dao
 interface ProductDao {
 
-    @Query("SELECT * FROM Product")
+    @Query("SELECT * FROM Product WHERE archived = 0 ORDER BY id ASC")
     fun getAllProducts() :  MutableList<Product>
 
     @Query("SELECT * FROM Product WHERE archived = 1 ORDER BY id ASC")
