@@ -1,5 +1,6 @@
 package kg.kunduznbkva.inventoryapplication
 
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,17 +8,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import kg.kunduznbkva.inventoryapplication.model.Product
 import kg.kunduznbkva.inventoryapp.utils.loadImage
+import kg.kunduznbkva.inventoryapplication.database.local.ProductDatabase
 import kg.kunduznbkva.inventoryapplication.databinding.FragmentAddBinding
+import kotlinx.coroutines.launch
+import java.io.File
 
 
 class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private var product: Product? = null
-    private var pos: Int = 0
+    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let { binding.productImg.setImageURI(uri) }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,6 +64,7 @@ class AddFragment : Fragment() {
     private fun initViews() {
         addProductClick()
         cancelClick()
+        binding.productImg.setOnClickListener { selectImageFromGallery() }
     }
 
     private fun addProductClick() {
@@ -85,6 +95,7 @@ class AddFragment : Fragment() {
         }
     }
 
+    private fun selectImageFromGallery() = selectImageFromGalleryResult.launch("image/*")
 
     private fun cancelClick() {
         binding.buttonCancel.setOnClickListener {
