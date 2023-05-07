@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import kg.kunduznbkva.inventoryapplication.database.local.ProductDatabase
 import kg.kunduznbkva.inventoryapplication.model.Product
 import kg.kunduznbkva.inventoryapplication.databinding.FragmentArchiveBinding
 import kg.kunduznbkva.inventoryapplication.utils.BottomSheetDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ArchiveFragment : Fragment(), OnLongItemClick, OnItemClickListener {
 
@@ -40,8 +44,13 @@ class ArchiveFragment : Fragment(), OnLongItemClick, OnItemClickListener {
     }
 
     private fun getArchiveProductsFromLocalDB() {
-        val listAllTasks = App.db.productDao().getAllArchiveProducts()
-        adapter.addAllTasksRoom(listAllTasks)
+        CoroutineScope(Dispatchers.IO).launch {
+            val db =  ProductDatabase.getInstance(requireContext())
+            val listAllTasks = db?.productDao()?.getAllArchiveProducts()
+            //TODO
+            adapter.addAllTasksRoom(listAllTasks!!)
+        }
+
     }
 
     override fun longClick(position: Int,productModel: Product) {

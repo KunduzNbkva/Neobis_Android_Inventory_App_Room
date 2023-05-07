@@ -1,16 +1,17 @@
 package kg.kunduznbkva.inventoryapplication.model
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
 data class Product(
     @PrimaryKey(autoGenerate = true)
-    var id : Long? = null,
-    var name: String? = null,
-    var price: Double? = null,
-    var fabric : String? = null,
-    var amount: Int? = null,
-    var img: Int? = null,
+    val id : Long? = null,
+    val name: String? = null,
+    val price: Double? = null,
+    val fabric : String? = null,
+    val amount: Int? = null,
+    val img: Bitmap? = null,
     var archived: Boolean = false
 ):java.io.Serializable

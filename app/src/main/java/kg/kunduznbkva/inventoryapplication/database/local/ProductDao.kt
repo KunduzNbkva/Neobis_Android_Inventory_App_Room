@@ -7,19 +7,19 @@ import kg.kunduznbkva.inventoryapplication.model.Product
 interface ProductDao {
 
     @Query("SELECT * FROM Product WHERE archived = 0 ORDER BY id ASC")
-    fun getAllProducts() :  MutableList<Product>
+    suspend fun getAllProducts() :  MutableList<Product>
 
     @Query("SELECT * FROM Product WHERE archived = 1 ORDER BY id ASC")
-    fun getAllArchiveProducts() :  MutableList<Product>
+    suspend fun getAllArchiveProducts() :  MutableList<Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(product: Product)
+    suspend fun insert(product: Product)
 
     @Update
-    fun updateProduct(product: Product)
+    suspend fun updateProduct(product: Product)
 
     @Delete
-    fun deleteProduct(product: Product)
+    suspend fun deleteProduct(product: Product)
 
 
 }

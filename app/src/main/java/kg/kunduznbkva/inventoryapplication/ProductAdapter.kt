@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kg.kunduznbkva.inventoryapplication.model.Product
-import kg.kunduznbkva.inventoryapp.utils.loadImage
+import kg.kunduznbkva.inventoryapplication.utils.loadImage
 import kg.kunduznbkva.inventoryapplication.databinding.RecyclerItemBinding
 
 
