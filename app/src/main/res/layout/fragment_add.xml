@@ -16,10 +16,11 @@
             android:layout_width="200dp"
             android:layout_height="150dp"
             android:layout_marginTop="40dp"
-            android:src="@drawable/image4"
+            android:src="@drawable/image_null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/product_image" />
 
         <TextView
             android:id="@+id/product_name"
@@ -33,6 +34,7 @@
             style="@style/fields_input_style"
             android:hint="@string/write_name"
             android:inputType="text"
+            android:autofillHints="name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/product_name"
@@ -52,7 +54,8 @@
             android:hint="@string/write_product_price"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_price" />
+            app:layout_constraintTop_toBottomOf="@+id/product_price"
+            android:autofillHints="phone" />
 
         <TextView
             android:id="@+id/product_fabric"
@@ -68,7 +71,8 @@
             android:hint="@string/write_product_fabric"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/product_fabric" />
+            app:layout_constraintTop_toBottomOf="@+id/product_fabric"
+            android:importantForAutofill="no" />
 
         <TextView
             android:id="@+id/product_amount"
@@ -99,6 +103,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/product_amount_edit"
             style="@style/add_btn_style" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

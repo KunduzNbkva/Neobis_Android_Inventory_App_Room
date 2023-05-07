@@ -1,4 +1,4 @@
-package kg.kunduznbkva.inventoryapplication
+package kg.kunduznbkva.inventoryapplication.ui
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,6 +9,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kg.kunduznbkva.inventoryapplication.R
 import kg.kunduznbkva.inventoryapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

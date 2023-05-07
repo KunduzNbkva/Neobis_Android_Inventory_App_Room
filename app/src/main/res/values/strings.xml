@@ -23,4 +23,7 @@
     <string name="archive_bottom_sheet">Архивировать</string>
     <string name="delete_bottom_sheet">Удалить</string>
     <string name="restore_bottom_sheet">Восстановить</string>
+    <string name="modal_bottom_sheet">ModalBottomSheet</string>
+    <string name="short_click">Short CLick</string>
+    <string name="product_image">product image</string>
 </resources>

@@ -1,7 +1,6 @@
-package kg.kunduznbkva.inventoryapplication
+package kg.kunduznbkva.inventoryapplication.ui
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -15,48 +14,53 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
+import kg.kunduznbkva.inventoryapplication.R
 import kg.kunduznbkva.inventoryapplication.model.Product
-import kg.kunduznbkva.inventoryapplication.database.local.ProductDatabase
 import kg.kunduznbkva.inventoryapplication.databinding.FragmentAddBinding
+import kg.kunduznbkva.inventoryapplication.presenter.PresenterMain
 import kg.kunduznbkva.inventoryapplication.utils.loadImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
 
 class AddFragment : Fragment() {
     private lateinit var binding: FragmentAddBinding
     private var product: Product? = null
-    private lateinit var imageUri: Uri
-    private val selectImageFromGalleryResult = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let {
-            binding.productImg.setImageURI(uri)
-            imageUri = uri}
-    }
+    private var imageUri: Uri? = null
+    private lateinit var presenter: PresenterMain
+    private val selectImageFromGalleryResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                binding.productImg.setImageURI(uri)
+                imageUri = uri
+            }
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentAddBinding.inflate(inflater, container, false)
+        presenter = PresenterMain(requireContext())
+        checkArguments()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initViews()
+    }
+
+    private fun checkArguments() {
         if (arguments != null) {
             checkData()
         } else {
             (activity as AppCompatActivity).supportActionBar?.title =
                 getString(R.string.add_product)
         }
-        initViews()
     }
 
+    @Suppress("DEPRECATION")
     private fun checkData() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            product =
-                requireArguments().getSerializable(BUNDLE_PRODUCT_KEY, Product::class.java)
+            product = requireArguments().getSerializable(BUNDLE_PRODUCT_KEY, Product::class.java)
             setData(product!!)
         } else {
             product = arguments?.getSerializable(BUNDLE_PRODUCT_KEY) as Product
@@ -70,50 +74,41 @@ class AddFragment : Fragment() {
     private fun initViews() {
         addProductClick()
         cancelClick()
-        binding.productImg.setOnClickListener { selectImageFromGallery() }
+        binding.productImg.setOnClickListener { selectImageFromGalleryResult.launch("image/*") }
     }
 
     private fun addProductClick() {
+        val productName = binding.productNameEdit.text.toString()
+        val productPrice = binding.productPriceEdit.text.toString()
+        val productFabric = binding.productFabricEdit.text.toString()
+        val productAmount = binding.productAmountEdit.text.toString()
+
+        val productNew = Product(
+            product?.id,
+            productName,
+            productPrice.toDouble(),
+            productFabric,
+            productAmount.toInt(),
+            convertUriToBitmap()
+        )
+
         binding.addBtn.setOnClickListener {
-            val productName = binding.productNameEdit.text.toString()
-            val productPrice = binding.productPriceEdit.text.toString()
-            val productFabric = binding.productFabricEdit.text.toString()
-            val productAmount = binding.productAmountEdit.text.toString()
-
-            val productNew = Product(product?.id,
-                productName, productPrice.toDouble(),
-                productFabric, productAmount.toInt(), convertUriToBitmap(imageUri))
-
-
-            if (product != null) {
-                if (dataCheck(productNew)) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                       val db =  ProductDatabase.getInstance(requireContext())
-                        db!!.productDao().updateProduct(productNew)
-                    }
-                    findNavController().navigate(R.id.action_navigation_detail_to_navigation_main)
-                }
-            } else {
-                if (dataCheck(productNew)) {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        val db =  ProductDatabase.getInstance(requireContext())
-                        db!!.productDao().insert(productNew)
-                    }
-                    findNavController().navigate(R.id.action_navigation_detail_to_navigation_main)
-                }
+            if (product != null && dataCheck(productNew)) {
+                presenter.updateProduct(productNew)
+                findNavController().navigate(R.id.action_navigation_detail_to_navigation_main)
+            } else if (dataCheck(productNew)) {
+                presenter.insertProduct(productNew)
+                findNavController().navigate(R.id.action_navigation_detail_to_navigation_main)
             }
         }
     }
 
-    private fun selectImageFromGallery() = selectImageFromGalleryResult.launch("image/*")
-
-    private fun convertUriToBitmap(uri: Uri): Bitmap? {
+    @Suppress("DEPRECATION")
+    private fun convertUriToBitmap(): Bitmap {
         val bitmap: Bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val src = ImageDecoder.createSource(context?.contentResolver!!, uri)
-            ImageDecoder.decodeBitmap(src)
-        } else {
-            MediaStore.Images.Media.getBitmap(context?.contentResolver, uri)
-        }
+            val src = imageUri?.let { ImageDecoder.createSource(context?.contentResolver!!, it) }
+            ImageDecoder.decodeBitmap(src!!)
+        } else MediaStore.Images.Media.getBitmap(context?.contentResolver, imageUri)
         return bitmap
     }
 
@@ -128,12 +123,13 @@ class AddFragment : Fragment() {
         binding.productFabricEdit.setText(product.fabric)
         binding.productPriceEdit.setText(product.price.toString())
         binding.productAmountEdit.setText(product.amount.toString())
-        product.img?.let {  binding.productImg.loadImage(it) }
+        product.img?.let { binding.productImg.loadImage(it) }
     }
 
     private fun dataCheck(product: Product): Boolean {
-        return if (product.name != null  && product.price != null &&
-            product.fabric != null && product.amount != null) {
+        return if (product.name != null && product.price != null &&
+            product.fabric != null && product.amount != null
+        ) {
             true
         } else {
             Toast.makeText(
@@ -149,5 +145,4 @@ class AddFragment : Fragment() {
         const val BUNDLE_PRODUCT_KEY = "product"
         const val BUNDLE_POSITION_KEY = "pos"
     }
-
 }
