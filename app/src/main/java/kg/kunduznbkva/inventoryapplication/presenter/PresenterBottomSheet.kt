@@ -7,22 +7,16 @@ import kg.kunduznbkva.inventoryapplication.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
-class PresenterArchived(
+class PresenterBottomSheet(
     context: Context
-) : IMainPresenter {
+): IBottomSheetPresenter {
     private val repositoryProduct: RepositoryProduct
     private var view: IViewProducts? = null
 
-
     init {
-        val productDao = ProductDatabase.getInstance(context)?.productDao()
-        repositoryProduct = productDao?.let { RepositoryProduct(it) }!!
-    }
-
-    override fun insertProduct(product: Product) {
-
+        val db = ProductDatabase.getInstance(context)?.productDao()
+        repositoryProduct = db?.let { RepositoryProduct(it) }!!
     }
 
 
@@ -32,28 +26,19 @@ class PresenterArchived(
         }
     }
 
-    override fun getAllProducts() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val archiveProductsList = repositoryProduct.getAllArchived()
-            withContext(Dispatchers.Main) {
-                view?.viewProducts(archiveProductsList)
-            }
-        }
-    }
-
-    override fun updateProduct(product: Product) {
+    override fun restoreProduct(product: Product) {
+        product.archived = false
         CoroutineScope(Dispatchers.IO).launch {
             repositoryProduct.updateProduct(product)
         }
     }
 
-    override fun attachView(view: IViewProducts) {
-        this.view = view
+    override fun archiveProduct(product: Product) {
+        product.archived = true
+        CoroutineScope(Dispatchers.IO).launch {
+            repositoryProduct.updateProduct(product)
+        }
     }
 
-
-    override fun detachView() {
-        this.view = null
-    }
 
 }

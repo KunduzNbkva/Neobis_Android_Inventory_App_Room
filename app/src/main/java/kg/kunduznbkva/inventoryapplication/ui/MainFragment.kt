@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import kg.kunduznbkva.inventoryapplication.R
@@ -16,11 +17,11 @@ import kg.kunduznbkva.inventoryapplication.adapters.OnItemClickListener
 import kg.kunduznbkva.inventoryapplication.adapters.OnMenuItemClick
 import kg.kunduznbkva.inventoryapplication.adapters.ProductAdapter
 import kg.kunduznbkva.inventoryapplication.databinding.FragmentMainBinding
-import kg.kunduznbkva.inventoryapplication.presenter.IShowProducts
+import kg.kunduznbkva.inventoryapplication.presenter.IViewProducts
 import kg.kunduznbkva.inventoryapplication.presenter.PresenterMain
 import kg.kunduznbkva.inventoryapplication.utils.BottomSheetDialog
 
-class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IShowProducts {
+class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IViewProducts {
     private lateinit var binding: FragmentMainBinding
     private lateinit var adapter: ProductAdapter
     private lateinit var presenter: PresenterMain
@@ -38,6 +39,9 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IShowProdu
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
+        presenter.observeProductsList().observe(viewLifecycleOwner) {
+            viewProducts(it)
+        }
         return binding.root
     }
 
@@ -50,6 +54,9 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IShowProdu
         initRecycler()
         getProductsFromLocalDB()
         floatingBtnClick()
+        presenter.observeProductsList().observe(viewLifecycleOwner) {
+          viewProducts(it)
+        }
     }
 
     private fun initRecycler() {
@@ -63,6 +70,7 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IShowProdu
     }
 
     private fun getProductsFromLocalDB() {
+        presenter.attachView(this)
         presenter.getAllProducts()
     }
 
@@ -85,10 +93,12 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IShowProdu
         dialog.show(parentFragmentManager,getString(R.string.modal_bottom_sheet))
     }
 
-    override fun showProducts(products: List<Product>) {
+    override fun viewProducts(products: List<Product>) {
         adapter.updateProduct(products)
     }
 
-
-
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.detachView()
+    }
 }

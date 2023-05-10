@@ -13,11 +13,11 @@ import kg.kunduznbkva.inventoryapplication.adapters.OnMenuItemClick
 import kg.kunduznbkva.inventoryapplication.adapters.ProductAdapter
 import kg.kunduznbkva.inventoryapplication.model.Product
 import kg.kunduznbkva.inventoryapplication.databinding.FragmentArchiveBinding
-import kg.kunduznbkva.inventoryapplication.presenter.IShowProducts
+import kg.kunduznbkva.inventoryapplication.presenter.IViewProducts
 import kg.kunduznbkva.inventoryapplication.presenter.PresenterArchived
 import kg.kunduznbkva.inventoryapplication.utils.BottomSheetDialog
 
-class ArchiveFragment : Fragment(), OnItemClickListener, OnMenuItemClick, IShowProducts {
+class ArchiveFragment : Fragment(), OnItemClickListener, OnMenuItemClick, IViewProducts {
     private lateinit var binding: FragmentArchiveBinding
     private lateinit var adapter: ProductAdapter
     private lateinit var presenter: PresenterArchived
@@ -48,6 +48,7 @@ class ArchiveFragment : Fragment(), OnItemClickListener, OnMenuItemClick, IShowP
     }
 
     private fun getArchiveProductsFromLocalDB() {
+        presenter.attachView(this)
         presenter.getAllProducts()
     }
 
@@ -70,7 +71,13 @@ class ArchiveFragment : Fragment(), OnItemClickListener, OnMenuItemClick, IShowP
         }
     }
 
-    override fun showProducts(products: List<Product>) {
+    override fun viewProducts(products: List<Product>) {
         adapter.updateProduct(products)
     }
+
+    override fun onResume() {
+        super.onResume()
+        presenter.getAllProducts()
+    }
+
 }

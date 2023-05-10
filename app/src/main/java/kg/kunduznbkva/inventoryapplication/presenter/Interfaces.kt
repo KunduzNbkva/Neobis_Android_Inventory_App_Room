@@ -3,8 +3,8 @@ package kg.kunduznbkva.inventoryapplication.presenter
 import kg.kunduznbkva.inventoryapplication.model.Product
 
 
-interface IShowProducts {
-    fun showProducts(products: List<Product>)
+interface IViewProducts {
+    fun viewProducts(products: List<Product>)
 }
 
 interface IMainPresenter {
@@ -12,8 +12,16 @@ interface IMainPresenter {
     fun deleteProduct(product: Product)
     fun getAllProducts()
     fun updateProduct(product: Product)
+    fun attachView(view: IViewProducts)
+    fun detachView()
 }
 
-interface IArchivePresenter {
-
+interface IBottomSheetPresenter{
+    fun deleteProduct(product: Product)
+    fun restoreProduct(product: Product)
+    fun archiveProduct(product: Product)
 }
+
+
+
+

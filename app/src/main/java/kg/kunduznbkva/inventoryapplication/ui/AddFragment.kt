@@ -72,7 +72,8 @@ class AddFragment : Fragment() {
     }
 
     private fun initViews() {
-        addProductClick()
+        binding.addBtn.setOnClickListener {
+            addProductClick() }
         cancelClick()
         binding.productImg.setOnClickListener { selectImageFromGalleryResult.launch("image/*") }
     }
@@ -86,7 +87,7 @@ class AddFragment : Fragment() {
         val productNew = Product(
             product?.id,
             productName,
-            productPrice.toDouble(),
+            productPrice.toDoubleOrNull(),
             productFabric,
             productAmount.toInt(),
             convertUriToBitmap()
@@ -103,8 +104,12 @@ class AddFragment : Fragment() {
         }
     }
 
+
     @Suppress("DEPRECATION")
-    private fun convertUriToBitmap(): Bitmap {
+    private fun convertUriToBitmap(): Bitmap? {
+        if (imageUri==null){
+            return null
+        }
         val bitmap: Bitmap = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             val src = imageUri?.let { ImageDecoder.createSource(context?.contentResolver!!, it) }
             ImageDecoder.decodeBitmap(src!!)

@@ -9,6 +9,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kg.kunduznbkva.inventoryapplication.database.local.ProductDatabase
 import kg.kunduznbkva.inventoryapplication.databinding.BottomSheetBinding
 import kg.kunduznbkva.inventoryapplication.model.Product
+import kg.kunduznbkva.inventoryapplication.presenter.IViewProducts
+import kg.kunduznbkva.inventoryapplication.presenter.PresenterBottomSheet
+import kg.kunduznbkva.inventoryapplication.presenter.PresenterMain
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,6 +19,8 @@ import kotlinx.coroutines.launch
 class BottomSheetDialog(private val product: Product, private var archive: Boolean) :
     BottomSheetDialogFragment() {
     private lateinit var binding: BottomSheetBinding
+    private lateinit var presenter: PresenterBottomSheet
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,6 +28,7 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
         savedInstanceState: Bundle?
     ): View {
         binding = BottomSheetBinding.inflate(inflater, container, false)
+        presenter = PresenterBottomSheet(requireContext())
         return binding.root
     }
 
@@ -56,6 +62,7 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
                 "Да",
                 positiveButtonAction = {
                     archiveProduct(product)
+                    dismiss()
                 },
                 "нет",
                 negativeButtonAction = {
@@ -67,11 +74,7 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
     }
 
     private fun archiveProduct(product: Product) {
-        product.archived = true
-        CoroutineScope(Dispatchers.IO).launch {
-            val db = ProductDatabase.getInstance(requireContext())
-            db?.productDao()?.insert(product)
-        }
+        presenter.archiveProduct(product)
         Toast.makeText(requireContext(), "Archieved", Toast.LENGTH_SHORT).show()
     }
 
@@ -83,8 +86,9 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
                 "Да",
                 positiveButtonAction = {
                     restoreProduct(product)
+                    dismiss()
                 },
-                "нет",
+                "Hет",
                 negativeButtonAction = {
                     dismiss()
                 },
@@ -93,12 +97,8 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
         }
     }
 
-    private fun restoreProduct(product:Product){
-        product.archived = false
-        CoroutineScope(Dispatchers.IO).launch {
-            val db = ProductDatabase.getInstance(requireContext())
-            db?.productDao()?.insert(product)
-        }
+    private fun restoreProduct(product: Product) {
+        presenter.restoreProduct(product)
         Toast.makeText(requireContext(), "Restored", Toast.LENGTH_SHORT).show()
     }
 
@@ -110,6 +110,7 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
                 "Да",
                 positiveButtonAction = {
                     deleteProduct(product)
+                    dismiss()
                 },
                 "нет",
                 negativeButtonAction = {
@@ -120,11 +121,9 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
         }
     }
 
-    private fun deleteProduct(product: Product){
-        CoroutineScope(Dispatchers.IO).launch {
-            val db = ProductDatabase.getInstance(requireContext())
-            db?.productDao()?.deleteProduct(product)
-        }
+    private fun deleteProduct(product: Product) {
+        presenter.deleteProduct(product)
         Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
     }
+
 }
