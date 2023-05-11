@@ -12,6 +12,8 @@ interface IMainPresenter {
     fun deleteProduct(product: Product)
     fun getAllProducts()
     fun updateProduct(product: Product)
+    fun searchProduct(searchQuery: String)
+
     fun attachView(view: IViewProducts)
     fun detachView()
 }

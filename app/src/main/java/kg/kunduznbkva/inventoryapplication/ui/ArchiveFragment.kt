@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -40,11 +41,26 @@ class ArchiveFragment : Fragment(), OnItemClickListener, OnMenuItemClick, IViewP
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecycler()
+        initSearchView()
         getArchiveProductsFromLocalDB()
     }
 
     private fun initRecycler() {
         binding.mainRecycler.adapter = adapter
+    }
+
+    private fun initSearchView(){
+        binding.searchViewMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null) presenter.searchProduct(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { presenter.searchProduct(it) }
+                return false
+            }
+        })
     }
 
     private fun getArchiveProductsFromLocalDB() {

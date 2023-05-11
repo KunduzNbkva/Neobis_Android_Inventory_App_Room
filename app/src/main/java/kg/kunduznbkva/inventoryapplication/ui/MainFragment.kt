@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import kg.kunduznbkva.inventoryapplication.R
@@ -52,11 +52,23 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IViewProdu
 
     private fun initViews() {
         initRecycler()
+        initSearchView()
         getProductsFromLocalDB()
         floatingBtnClick()
-        presenter.observeProductsList().observe(viewLifecycleOwner) {
-          viewProducts(it)
-        }
+    }
+
+    private fun initSearchView(){
+        binding.searchViewMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if(query != null) presenter.searchProduct(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                newText?.let { presenter.searchProduct(it) }
+                return false
+            }
+        })
     }
 
     private fun initRecycler() {

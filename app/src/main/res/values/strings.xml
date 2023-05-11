@@ -26,4 +26,5 @@
     <string name="modal_bottom_sheet">ModalBottomSheet</string>
     <string name="short_click">Short CLick</string>
     <string name="product_image">product image</string>
+    <string name="find">Поиск</string>
 </resources>

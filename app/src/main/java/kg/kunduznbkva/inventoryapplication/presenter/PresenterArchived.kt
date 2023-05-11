@@ -47,6 +47,21 @@ class PresenterArchived(
         }
     }
 
+    override fun searchProduct(searchQuery: String) {
+        val searchedProducts = mutableListOf<Product>()
+        CoroutineScope(Dispatchers.Main).launch {
+            val productsList = repositoryProduct.getAllProducts()
+            for (itemProduct in productsList) {
+                if (itemProduct.name!!.contains(
+                        searchQuery,
+                        true
+                    )
+                ) searchedProducts.add(itemProduct)
+            }
+            view?.viewProducts(searchedProducts)
+        }
+    }
+
     override fun attachView(view: IViewProducts) {
         this.view = view
     }
