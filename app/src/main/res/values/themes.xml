@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.InventoryApplication" parent="Theme.MaterialComponents.DayNight">
         <!-- Primary brand color. -->
@@ -16,11 +16,9 @@
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
     </style>
 
-
 <style name="MyTheme.ActionBar.TitleTextStyle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
     <item name="android:textColor">@color/main_blue</item>
     <item name="android:textSize">24sp</item>
 </style>
-
 
 </resources>

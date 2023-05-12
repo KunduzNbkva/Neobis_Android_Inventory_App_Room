@@ -1,7 +1,6 @@
 package kg.kunduznbkva.inventoryapplication.presenter
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import kg.kunduznbkva.inventoryapplication.database.local.ProductDatabase
 import kg.kunduznbkva.inventoryapplication.database.local.RepositoryProduct
 import kg.kunduznbkva.inventoryapplication.model.Product
@@ -15,22 +14,18 @@ class PresenterMain(
 ) : IMainPresenter {
     private val repositoryProduct: RepositoryProduct
     private var view: IViewProducts? = null
-    private var productsMutableList = MutableLiveData<List<Product>>()
 
     init {
         val productDao = ProductDatabase.getInstance(context)?.productDao()
         repositoryProduct = productDao?.let { RepositoryProduct(it) }!!
     }
 
-    fun observeProductsList(): MutableLiveData<List<Product>> {
-        return productsMutableList
-    }
+
 
     override fun getAllProducts() {
         CoroutineScope(Dispatchers.IO).launch {
             val productsList = repositoryProduct.getAllProducts()
             withContext(Dispatchers.Main) {
-                productsMutableList.value = productsList
                 view?.viewProducts(productsList)
             }
         }

@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kg.kunduznbkva.inventoryapplication.database.local.ProductDatabase
+import kg.kunduznbkva.inventoryapplication.R
 import kg.kunduznbkva.inventoryapplication.databinding.BottomSheetBinding
 import kg.kunduznbkva.inventoryapplication.model.Product
-import kg.kunduznbkva.inventoryapplication.presenter.IViewProducts
 import kg.kunduznbkva.inventoryapplication.presenter.PresenterBottomSheet
-import kg.kunduznbkva.inventoryapplication.presenter.PresenterMain
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class BottomSheetDialog(private val product: Product, private var archive: Boolean) :
     BottomSheetDialogFragment() {
@@ -56,20 +53,9 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
 
     private fun btnArchive(product: Product) {
         binding.bottomSheetArchive.setOnClickListener {
-            requireContext().showAlertDialog(
-                "Архивирование",
-                "Архивировать ${product.name} из каталога?",
-                "Да",
-                positiveButtonAction = {
-                    archiveProduct(product)
-                    dismiss()
-                },
-                "нет",
-                negativeButtonAction = {
-                    dismiss()
-                },
-                cancelable = true
-            )
+            createAlert("Архивировать ${product.name} из каталога?") { product ->
+                archiveProduct(product)
+            }
         }
     }
 
@@ -80,20 +66,9 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
 
     private fun btnRestore(product: Product) {
         binding.bottomSheetRestore.setOnClickListener {
-            requireContext().showAlertDialog(
-                "Восстановление",
-                "Восстановить ${product.name} из каталога?",
-                "Да",
-                positiveButtonAction = {
-                    restoreProduct(product)
-                    dismiss()
-                },
-                "Hет",
-                negativeButtonAction = {
-                    dismiss()
-                },
-                cancelable = true
-            )
+            createAlert("Восстановить ${product.name} из каталога?") { product ->
+                restoreProduct(product)
+            }
         }
     }
 
@@ -104,26 +79,43 @@ class BottomSheetDialog(private val product: Product, private var archive: Boole
 
     private fun btnDelete(product: Product) {
         binding.bottomSheetDelete.setOnClickListener {
-            requireContext().showAlertDialog(
-                "Удаление",
-                "Удалить ${product.name} из каталога?",
-                "Да",
-                positiveButtonAction = {
-                    deleteProduct(product)
-                    dismiss()
-                },
-                "нет",
-                negativeButtonAction = {
-                    dismiss()
-                },
-                cancelable = true
-            )
+            createAlert("Удалить ${product.name} из каталога?") { product ->
+                deleteProduct(product)
+            }
         }
     }
 
     private fun deleteProduct(product: Product) {
         presenter.deleteProduct(product)
         Toast.makeText(requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun createAlert(s: String, method: (Product) -> Unit) {
+        val builder = AlertDialog.Builder(requireContext())
+        val inflater = requireActivity().layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_custom, null)
+        builder.setView(dialogView)
+
+        val dialog = builder.create()
+        val window = dialog.window
+        window?.setBackgroundDrawableResource(R.drawable.alert_bg)
+
+        val dialogTitle = dialogView.findViewById<TextView>(R.id.dialog_title)
+        dialogTitle.text = s
+
+        val dialogConfirmButton = dialogView.findViewById<TextView>(R.id.dialog_yes)
+        dialogConfirmButton.setOnClickListener {
+            method(product)
+            dialog.dismiss()
+            dismiss()
+        }
+
+        val dialogCancelButton = dialogView.findViewById<TextView>(R.id.dialog_no)
+        dialogCancelButton.setOnClickListener {
+            dialog.dismiss()
+            dismiss()
+        }
+        dialog.show()
     }
 
 }

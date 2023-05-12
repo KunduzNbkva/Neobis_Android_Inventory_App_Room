@@ -22,7 +22,11 @@
         android:id="@+id/navigation_archive"
         android:name="kg.kunduznbkva.inventoryapplication.ui.ArchiveFragment"
         android:label="@string/archive"
-        tools:layout="@layout/fragment_archive" />
+        tools:layout="@layout/fragment_archive" >
+        <action
+            android:id="@+id/action_navigation_archive_to_navigation_detail"
+            app:destination="@id/navigation_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_detail"

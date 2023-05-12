@@ -12,8 +12,8 @@ import kg.kunduznbkva.inventoryapplication.R
 import kg.kunduznbkva.inventoryapplication.adapters.OnItemClickListener
 import kg.kunduznbkva.inventoryapplication.adapters.OnMenuItemClick
 import kg.kunduznbkva.inventoryapplication.adapters.ProductAdapter
-import kg.kunduznbkva.inventoryapplication.model.Product
 import kg.kunduznbkva.inventoryapplication.databinding.FragmentArchiveBinding
+import kg.kunduznbkva.inventoryapplication.model.Product
 import kg.kunduznbkva.inventoryapplication.presenter.IViewProducts
 import kg.kunduznbkva.inventoryapplication.presenter.PresenterArchived
 import kg.kunduznbkva.inventoryapplication.utils.BottomSheetDialog
@@ -80,7 +80,7 @@ class ArchiveFragment : Fragment(), OnItemClickListener, OnMenuItemClick, IViewP
     override fun onItemClick(productModel: Product, position: Int) {
         if (productModel.id != null) {
             findNavController().navigate(
-                R.id.action_navigation_main_to_navigation_detail, bundleOf(
+                R.id.action_navigation_archive_to_navigation_detail, bundleOf(
                     AddFragment.BUNDLE_PRODUCT_KEY to productModel, AddFragment.BUNDLE_POSITION_KEY to position
                 )
             )

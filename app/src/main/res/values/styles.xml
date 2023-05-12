@@ -92,4 +92,9 @@
         <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
+    <style name="MyTheme.NoActionBar" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
 </resources>

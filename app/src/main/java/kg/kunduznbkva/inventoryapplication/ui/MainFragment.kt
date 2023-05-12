@@ -26,7 +26,6 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IViewProdu
     private lateinit var adapter: ProductAdapter
     private lateinit var presenter: PresenterMain
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         adapter = ProductAdapter(this, this)
@@ -39,9 +38,6 @@ class MainFragment : Fragment(), OnMenuItemClick, OnItemClickListener,IViewProdu
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMainBinding.inflate(inflater, container, false)
-        presenter.observeProductsList().observe(viewLifecycleOwner) {
-            viewProducts(it)
-        }
         return binding.root
     }
 
