@@ -20,6 +20,8 @@ The following **required** functionality is completed:
 ## Video Walkthrough
 
 Here's a walkthrough of implemented features:
+
+
 ![ezgif com-video-to-gif](https://github.com/KunduzNbkva/Neobis_Android_Inventory_App_Room/assets/57134232/15b331b7-bf1a-4467-9656-5c98dd48416b)
 
 ![deleting_archive](https://github.com/KunduzNbkva/Neobis_Android_Inventory_App/assets/57134232/cc2518d3-cf50-4174-83a4-836ab9575c6f)
